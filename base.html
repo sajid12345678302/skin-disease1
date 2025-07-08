@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AI_powered Skin Disease Detector{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+                /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Body Styling */
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        header .logo {
+            font-size: 2rem;
+        }
+
+        .site-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffdd57;
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Upload Form */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button, input[type="submit"] {
+            padding: 12px;
+            background-color: #2575fc;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover, input[type="submit"]:hover {
+            background-color: #1a5ae0;
+        }
+
+        /* Error Message */
+        .error {
+            color: red;
+            font-weight: 500;
+        }
+
+        /* Prediction Result */
+        .result {
+            background-color: #e0f0ff;
+            border-left: 6px solid #2575fc;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .confidence {
+            color: #6a11cb;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        .center-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin: 50px auto;
+            padding: 20px;
+            max-width: 600px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .center-wrapper form {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .center-wrapper input[type="file"] {
+            margin: 10px 0;
+            width: 100%;
+        }
+
+        .center-wrapper button {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .center-wrapper .error {
+            color: red;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f0f0f0;
+            font-size: 0.95rem;
+            color: #666;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Flash Messages */
+        .flashes {
+            list-style: none;
+            padding: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #2575fc;
+            background-color: #dff0ff;
+            border-radius: 8px;
+        }
+
+        /* Login/Signup Form Styling */
+        .auth-form {
+            max-width: 400px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .auth-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav {
+                margin-top: 10px;
+            }
+        }
+
+        /* Report Page Styling */
+        .report-container {
+            max-width: 700px;
+            margin: 60px auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.12);
+            padding: 40px;
+        }
+
+        .report-container .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .report-container .header .logo {
+            font-size: 2.5rem;
+            color: #6a11cb;
+        }
+
+        .report-container h1 {
+            font-size: 2rem;
+            color: #222;
+            margin: 10px 0 0 0;
+        }
+
+        .report-container h2 {
+            color: #2575fc;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .report-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 18px;
+            font-size: 1.05rem;
+        }
+
+        .report-container td {
+            padding: 7px 0;
+        }
+
+        .report-container .result {
+            background: #f3f7ff;
+            border-left: 5px solid #2575fc;
+            padding: 18px 20px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+        }
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh; /* Adjust as needed */
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Contact Page Styling */
+        .contact-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            background-color: #f5f7fa;
+            min-height: calc(100vh - 120px); /* Adjust based on header and footer height */
+        }
+
+        .contact-wrapper h1 {
+            font-size: 2.5rem;
+            color: #2575fc;
+            margin-bottom: 10px;
+        }
+
+        .contact-wrapper p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 40px;
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .contact-form {
+            flex: 1 1 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .contact-form button {
+            padding: 12px;
+            background-color: #2575fc;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #1a5ae0;
+        }
+
+        .contact-info {
+            flex: 1 1 300px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact-info h2 {
+            margin-bottom: 20px;
+            color: #2575fc;
+        }
+
+        .contact-info p {
+            margin: 10px 0;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            color: #6a11cb;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .contact-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        .report-container .confidence {
+            color: #6a11cb;
+            font-weight: 600;
+        }
+
+        .report-container .footer {
+            text-align: center;
+            color: #888;
+            font-size: 0.95rem;
+            margin-top: 30px;
+        }
+
+        .report-container .footer span {
+            color: #aaa;
+            font-size: 0.9em;
+        }
+
+    </style>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <span class="logo"><i class="fa-solid fa-stethoscope"></i></span>
+            <span class="site-title">AI_powered Skin Disease Detector</span>
+        </div>
+<nav>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/how">How it Works</a>
+    <a href="/contact">Contact</a>
+    {% if session.get('user') %}
+        <a href="#">Welcome, {{ session['user'] }}</a>
+        <a href="/logout">Logout</a>
+    {% else %}
+        <a href="/signup">Sign Up</a>
+        <a href="/login">Login</a>
+    {% endif %}
+</nav>
+
+
+    </header>
+    {% block content %}{% endblock %}
+    <footer>
+        &copy; 2025 Skin Disease Detector. Powered by a custom CNN model. All rights reserved.<br>
+        <span style="font-size:0.95em; color:#aaa;">This site is for informational purposes only and does not provide medical advice.</span>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}How it Works | AI-powered Skin Disease Detector{% endblock %}
+{% block content %}
+<main class="main-content">
+    <h1><i class="fa-solid fa-gears"></i> How it Works</h1>
+    <ul style="color: #444; font-size: 1.1rem; line-height: 1.8; text-align: left; max-width: 600px; margin: 0 auto 30px auto;">
+        <li><b>Image Upload:</b> Users upload a skin image for analysis.</li>
+        <li><b>Preprocessing:</b> The image is resized to 128x128 and converted to grayscale for model input.</li>
+        <li><b>Model:</b> The CNN has 3 convolutional layers followed by dense layers for classification.</li>
+        <li><b>Prediction:</b> The model predicts the likely disease and confidence.</li>
+        <li><b>Built With:</b> Python, Flask, TensorFlow, Keras.</li>
+    </ul>
+    <a class="back-link" href="/">&#8592; Back to Home</a>
+</main>
+{% endblock %}

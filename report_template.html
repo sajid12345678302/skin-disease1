@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Detection Report | AI-powered Skin Disease Detector{% endblock %}
+
+{% block content %}
+<div class="report-container" style="max-width:700px;margin:60px auto;background:#fff;border-radius:16px;box-shadow:0 8px 32px 0 rgba(31,38,135,0.12);padding:40px;">
+    <div class="header" style="text-align:center;margin-bottom:30px;">
+        <div class="logo" style="font-size:2.5rem;color:#6a11cb;">&#129658;</div>
+        <h1 style="font-size:2rem;color:#222;">Skin Disease Detection Report</h1>
+    </div>
+
+    <div>
+        <h2 style="color:#2575fc;">Patient Information</h2>
+        <table style="width:100%;border-collapse:collapse;font-size:1.05rem;margin-bottom:20px;">
+            <tr><td><strong>Name:</strong></td><td>{{ patient_name }}</td></tr>
+            <tr><td><strong>Age:</strong></td><td>{{ age }}</td></tr>
+            <tr><td><strong>Gender:</strong></td><td>{{ gender }}</td></tr>
+            <tr><td><strong>Date:</strong></td><td>{{ date }}</td></tr>
+        </table>
+    </div>
+
+    <div>
+        <h2 style="color:#2575fc;">Prediction Result</h2>
+        <div style="background:#f3f7ff;border-left:5px solid #2575fc;padding:18px 20px;border-radius:8px;margin-bottom:18px;">
+            <p><strong>Prediction:</strong> {{ pred_output }}</p>
+            <p><span style="color:#6a11cb;font-weight:600;">Confidence:</span> {{ confidence }}%</p>
+        </div>
+    </div>
+
+    <div class="footer" style="text-align:center;color:#888;font-size:0.95rem;margin-top:30px;">
+        &copy; 2025 Skin Disease Detector. This report is AI-generated for informational use only.<br>
+        <span style="font-size:0.9em;color:#aaa;">Not a substitute for professional medical advice or treatment.</span>
+    </div>
+</div>
+{% endblock %}

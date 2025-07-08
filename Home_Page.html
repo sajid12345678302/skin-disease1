@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}AI_powered Skin Disease Detector{% endblock %}
+{% block content %}
+<main><div class="center-wrapper">
+    <h2>Skin Disease Detection</h2>
+    <p>Upload a clear skin image to detect possible skin disease using our AI-powered deep learning model.</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        <label for="file">Choose Image</label>
+        <input type="file" name="file" id="file">
+        <button type="submit">🔍 Predict</button>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+</div>
+</main>
+{% endblock %}

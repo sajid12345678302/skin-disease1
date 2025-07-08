@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<div class="contact-wrapper">
+    <h1>Contact Us</h1>
+    <p>We'd love to hear from you! Please fill out the form below or reach us through the provided contact details.</p>
+    
+    <div class="contact-container">
+        <!-- Contact Form -->
+        <form method="POST" action="/contact" class="contact-form">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" rows="6" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+
+        <!-- Contact Information -->
+        <div class="contact-info">
+            <h2>Get in Touch</h2>
+            <p><i class="fa-solid fa-envelope"></i> contact@skindetector.com</p>
+            <p><i class="fa-solid fa-phone"></i> +92 300 1234567</p>
+            <p><i class="fa-solid fa-location-dot"></i> Bahawalpur, Pakistan</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
